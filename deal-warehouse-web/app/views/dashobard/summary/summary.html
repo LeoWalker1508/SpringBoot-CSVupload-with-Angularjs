@@ -1,0 +1,64 @@
+<div>
+	<a ui-sref="overview" class="pull-right btn btn-primary btn-outline btn-rounded">Back to Upload Deals</a>
+	<h2>Summary </h2>
+	<!--<small>Uploaded ware house deal file summary</small>-->
+	<div class="jumbotron">
+		<form name="summaryForm">
+			<div class="row">
+				<div class="col-md-10">
+					<h2>Search File Summary By Name </h2>
+					<div id="summary-search-input">
+						<div class="input-group col-md-12">
+							<input type="text" name="fileName" data-ng-model="summaryCtrlVM.fileName" class="form-control input-lg" placeholder="Searh Uploaded file summary"
+								required />
+							<span class="input-group-btn">
+                     <button class="btn btn-info btn-lg" type="button" ng-click="summaryCtrlVM.doFileSummary()" 
+                        data-ng-disabled="summaryForm.fileName.$invalid">
+                     <i class="glyphicon glyphicon-search" ></i>
+                     </button>
+                     </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-md-10">
+				<summary-table results="summaryCtrlVM.summary"></summary-table>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+	#summary-search-input {
+		padding: 3px;
+		border: solid 1px #E4E4E4;
+		border-radius: 6px;
+		background-color: #fff;
+	}
+	
+	#summary-search-input input {
+		border: 0;
+		box-shadow: none;
+	}
+	
+	#summary-search-input button {
+		margin: 2px 0 0 0;
+		background: none;
+		box-shadow: none;
+		border: 0;
+		color: #666666;
+		padding: 0 8px 0 10px;
+		border-left: solid 1px #ccc;
+	}
+	
+	#summary-search-input button:hover {
+		border: 0;
+		box-shadow: none;
+		border-left: solid 1px #ccc;
+	}
+	
+	#summary-search-input .glyphicon-search {
+		font-size: 23px;
+	}
+</style>

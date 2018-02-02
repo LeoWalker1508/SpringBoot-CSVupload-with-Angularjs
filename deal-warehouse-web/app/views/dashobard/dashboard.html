@@ -1,0 +1,29 @@
+<div class="dashboard-page">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<div class="text-center">
+					<img src="images/logo.png" class="user-avatar" /><br />
+					<h2 class="brand"> Data Warehouse </h2>
+					<!--Clustered-->
+				</div>
+				<hr>
+				<br/>
+				<br/> 
+				<ul class="nav nav-sidebar">
+					<li ng-class="{active: $state.includes('dealupload')}"><a ui-sref="dealupload"> Upload Deal<span class="sr-only">(current)</span></a></li>
+					<li ng-class="{active: $state.includes('uploadsummary')}"><a ui-sref="uploadsummary">Summary</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<ui-view></ui-view>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+	.user-avatar {
+		width: 224px !important;
+		height: 70px !important;
+	}
+</style>

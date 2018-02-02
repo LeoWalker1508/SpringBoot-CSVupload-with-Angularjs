@@ -1,0 +1,25 @@
+<div class="bs-example">
+	<hr>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>File Name</th>
+				<th>Total Deals</th>
+				<th>Invalid Deals</th>
+				<th>Processing Time </th>
+				<th>TimesStamp</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr  ng-repeat="r in results">
+				<td>{{r.fileId}}</td>
+				<td>{{r.fileName}}</td>
+				<td>{{r.noOfTotalDeal}}</td>
+				<td>{{r.noOfInValidDeal}}</td>
+				<td>{{r.processingTime}}</td>
+				<td>{{r.uploadedDate | date:'medium'}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

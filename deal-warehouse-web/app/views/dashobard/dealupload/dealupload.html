@@ -1,0 +1,26 @@
+<div>
+	<div class="alert alert-danger" data-ng-show="dealUploadCtrlVM.showError">
+		<strong>Danger!</strong> {{ dealUploadCtrlVM.errorMsg }}
+	</div>
+	<div class="alert alert-success" data-ng-show="dealUploadCtrlVM.showMsg">
+		<strong>Success!</strong> CSV file uplaoded succesfully!
+	</div>
+	<a ui-sref="reports" class="pull-right btn btn-primary btn-outline btn-rounded">Uploaded Summary </a>
+	<h2>Upload Deals </h2>
+	<div class="jumbotron">
+		<div class="container">
+			<h3> Upload WareHouse Deal</h3>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form name="dealForm">
+						<div class="form-group">
+							<input type="file" name="mycsvfile" deal-upload="mycsvfile" class="form-control" id="myFileField" />
+						</div>
+						<a ng-click="dealUploadCtrlVM.dealFileUpload()" class="btn btn-primary btn-lg btn-outline btn-rounded" data-ng-disabled="dealForm.mycsvfile.$invalid">Upload Deals</a>
+					</form>
+				</div>
+			</div>
+			<summary-table results="dealUploadCtrlVM.uploadsummary"></summary-table>
+		</div>
+	</div>
+</div>
