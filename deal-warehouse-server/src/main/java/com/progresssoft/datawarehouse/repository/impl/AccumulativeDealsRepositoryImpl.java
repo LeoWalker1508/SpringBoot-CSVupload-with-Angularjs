@@ -31,7 +31,7 @@ public class AccumulativeDealsRepositoryImpl implements AccumulativeDealsReposit
 	@Override
 	public void bulkSaveAccumulativeDealsEntity(List<AccumulativeDetailsEntity> tmpAccumulativeDealsEntity) {
 
-		LOGGER.debug("Invoked:  bulkSaveAccumulativeDealsEntity() ");
+		LOGGER.info("Invoked:  bulkSaveAccumulativeDealsEntity() ");
 		long startSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
 		int batchSize = 100;
@@ -45,8 +45,8 @@ public class AccumulativeDealsRepositoryImpl implements AccumulativeDealsReposit
 		}
 
 		long endSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-		LOGGER.debug("Time Taken : {} s ", (endSecond - startSecond));
-		LOGGER.debug("Exit:  bulkSaveAccumulativeDealsEntity()");
+		LOGGER.info("Time Taken : {} s ", (endSecond - startSecond));
+		LOGGER.info("Exit:  bulkSaveAccumulativeDealsEntity()");
 	}
 
 	public <T extends AccumulativeDetailsEntity> T persistObject(T t) {

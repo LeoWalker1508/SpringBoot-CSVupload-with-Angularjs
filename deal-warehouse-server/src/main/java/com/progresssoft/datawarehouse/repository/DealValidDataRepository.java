@@ -13,6 +13,7 @@ import com.progresssoft.datawarehouse.entity.DealValidDataEntity;
  *
  */
 @Repository
-public interface DealValidDataRepository extends JpaRepository<DealValidDataEntity, Integer> {
+public interface DealValidDataRepository
+		extends JpaRepository<DealValidDataEntity, Integer>, DealValidDataRepositoryCustom {
 
 }

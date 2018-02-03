@@ -28,7 +28,7 @@ public class DealValidDataEntity implements Serializable {
 	private static final long serialVersionUID = -2293015492430082803L;
 	@Id
 	@GeneratedValue
-	private String id;
+	private Integer dealId;
 
 	@NotNull(message = "Deal unique Id is compulsory")
 	// Deal Unique Id
@@ -47,7 +47,7 @@ public class DealValidDataEntity implements Serializable {
 	private Date dealTimeStamp;
 
 	// Deal Amount in ordering currency
-	private double dealAmount;
+	private String dealAmount;
 
 	@Column(name = "file_Id")
 	private Integer fileId;
@@ -58,10 +58,15 @@ public class DealValidDataEntity implements Serializable {
 	public DealValidDataEntity() {
 	}
 
-	public DealValidDataEntity(String id, String dealUniqueId, String fromCurrency, String toCurrency,
-			Date dealTimeStamp, double dealAmount, Integer fileId) {
+	public DealValidDataEntity(Integer fileId) {
 		super();
-		this.id = id;
+		this.fileId = fileId;
+	}
+
+	public DealValidDataEntity(Integer dealId, String dealUniqueId, String fromCurrency, String toCurrency,
+			Date dealTimeStamp, String dealAmount, Integer fileId) {
+		super();
+		this.dealId = dealId;
 		this.dealUniqueId = dealUniqueId;
 		this.fromCurrency = fromCurrency;
 		this.toCurrency = toCurrency;
@@ -70,60 +75,121 @@ public class DealValidDataEntity implements Serializable {
 		this.fileId = fileId;
 	}
 
-	public String getId() {
-		return id;
+	/**
+	 * @return the dealId
+	 */
+	public Integer getDealId() {
+		return dealId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	/**
+	 * @param dealId
+	 *            the dealId to set
+	 */
+	public void setDealId(Integer dealId) {
+		this.dealId = dealId;
 	}
 
+	/**
+	 * @return the dealUniqueId
+	 */
 	public String getDealUniqueId() {
 		return dealUniqueId;
 	}
 
+	/**
+	 * @param dealUniqueId
+	 *            the dealUniqueId to set
+	 */
 	public void setDealUniqueId(String dealUniqueId) {
 		this.dealUniqueId = dealUniqueId;
 	}
 
+	/**
+	 * @return the fromCurrency
+	 */
 	public String getFromCurrency() {
 		return fromCurrency;
 	}
 
+	/**
+	 * @param fromCurrency
+	 *            the fromCurrency to set
+	 */
 	public void setFromCurrency(String fromCurrency) {
 		this.fromCurrency = fromCurrency;
 	}
 
+	/**
+	 * @return the toCurrency
+	 */
 	public String getToCurrency() {
 		return toCurrency;
 	}
 
+	/**
+	 * @param toCurrency
+	 *            the toCurrency to set
+	 */
 	public void setToCurrency(String toCurrency) {
 		this.toCurrency = toCurrency;
 	}
 
+	/**
+	 * @return the dealTimeStamp
+	 */
 	public Date getDealTimeStamp() {
 		return dealTimeStamp;
 	}
 
+	/**
+	 * @param dealTimeStamp
+	 *            the dealTimeStamp to set
+	 */
 	public void setDealTimeStamp(Date dealTimeStamp) {
 		this.dealTimeStamp = dealTimeStamp;
 	}
 
-	public double getDealAmount() {
+	/**
+	 * @return the dealAmount
+	 */
+	public String getDealAmount() {
 		return dealAmount;
 	}
 
-	public void setDealAmount(double dealAmount) {
+	/**
+	 * @param dealAmount
+	 *            the dealAmount to set
+	 */
+	public void setDealAmount(String dealAmount) {
 		this.dealAmount = dealAmount;
 	}
 
+	/**
+	 * @return the fileId
+	 */
 	public Integer getFileId() {
 		return fileId;
 	}
 
+	/**
+	 * @param fileId
+	 *            the fileId to set
+	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "DealValidDataEntity [dealId=" + dealId + ", dealUniqueId=" + dealUniqueId + ", fromCurrency="
+				+ fromCurrency + ", toCurrency=" + toCurrency + ", dealTimeStamp=" + dealTimeStamp + ", dealAmount="
+				+ dealAmount + ", fileId=" + fileId + "]";
 	}
 
 }

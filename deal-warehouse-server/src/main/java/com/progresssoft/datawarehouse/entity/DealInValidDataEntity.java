@@ -25,7 +25,7 @@ public class DealInValidDataEntity implements Serializable {
 	private static final long serialVersionUID = -5348055813277594272L;
 	@Id
 	@GeneratedValue
-	private String id;
+	private Integer inValidDealId;
 	private String dealUniqueId;
 	private String fromCurrency;
 	private String toCurrency;
@@ -41,16 +41,16 @@ public class DealInValidDataEntity implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
-		return id;
+	public Integer getInValidDealId() {
+		return inValidDealId;
 	}
 
 	/**
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setInValidDealId(Integer inValidDealId) {
+		this.inValidDealId = inValidDealId;
 	}
 
 	/**
@@ -130,9 +130,9 @@ public class DealInValidDataEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DealInValidData [Id=" + id + ", dealUniqueId=" + dealUniqueId + ", fromCurrency=" + fromCurrency
-				+ ", toCurrency=" + toCurrency + ", dealTimeStamp=" + dealTimeStamp + ", dealAmount=" + dealAmount
-				+ ", uploadedFile=" + fileId + "]";
+		return "DealInValidData [Id=" + inValidDealId + ", dealUniqueId=" + dealUniqueId + ", fromCurrency="
+				+ fromCurrency + ", toCurrency=" + toCurrency + ", dealTimeStamp=" + dealTimeStamp + ", dealAmount="
+				+ dealAmount + ", uploadedFile=" + fileId + "]";
 	}
 
 	/**
