@@ -8,8 +8,12 @@ public class ProgressSoftUtil {
 		throw new IllegalStateException("this is Utility class");
 	}
 
-	public static Date convertStringToDate(String strDate) { 
-		return new Date(strDate);
+	@SuppressWarnings("deprecation")
+	public static Date convertStringToDate(String strDate) {
+		if (null != strDate && !strDate.isEmpty()) {
+			return new Date(strDate);
+		}
+		return null;
 	}
 
 }

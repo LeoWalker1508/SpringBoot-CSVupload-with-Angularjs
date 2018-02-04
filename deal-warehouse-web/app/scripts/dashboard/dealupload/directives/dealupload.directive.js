@@ -6,8 +6,7 @@
  * @description
  * # dealUploadDirective
  */
-angular.module('myWareHouseApp')
-  .directive('dealUpload', function ($parse) {
+ uploadDeal.directive('dealUpload', function ($parse) {
     return {
       restrict: 'A',
       // Link function will define the functionality of directive 

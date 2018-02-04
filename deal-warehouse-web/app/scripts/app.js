@@ -8,27 +8,26 @@
  *
  * Main module of the application.
  */
-angular
-  .module('myWareHouseApp', [
-    "ui.router",
-    'uploadDealModule',
-    'summaryModule',
-    'TableModule'
-  ])
+angular.module('myWareHouseApp', ['blockUI',
+  "ui.router",
+  'uploadDealModule',
+  'summaryModule',
+  'serviceEndPoint',
+  'TableModule'
+])
   .config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/dashboard", "/dashboard/searchscreen");
+    $urlRouterProvider.otherwise("/dashboard/upload");
     $stateProvider.state('base', {
       abstract: true,
       url: '',
       templateUrl: 'views/base.html'
+    }).state('dashboard', {
+      url: '/dashboard',
+      parent: 'base',
+      templateUrl: 'views/dashobard/dashboard.html'
     })
-      .state('dashboard', {
-        url: '/dashboard',
-        parent: 'base',
-        templateUrl: 'views/dashobard/dashboard.html'
-      })
       .state('dealupload', {
-        url: '/dealupload',
+        url: '/upload',
         parent: 'dashboard',
         templateUrl: 'views/dashobard/dealupload/dealupload.html',
         controller: 'DealUploadCtrl',

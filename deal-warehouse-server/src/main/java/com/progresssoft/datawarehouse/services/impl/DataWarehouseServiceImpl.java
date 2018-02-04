@@ -109,21 +109,18 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(file.getInputStream()));) {
 			List<DealValidDataEntity> uploadedDealList = in.lines().skip(1).map(tmpLine -> {
 				DealValidDataEntity dataEntity = new DealValidDataEntity(fileEntity.getFileId());
-				;
+				
 				int columnIdx = 0;
 				for (String tmpData : tmpLine.split(",")) {
-
+					
 					if (columnIdx == 0) {
-
 						dataEntity.setDealUniqueId(tmpData);
 					} else if (columnIdx == 1) {
 						dataEntity.setFromCurrency(tmpData);
 					} else if (columnIdx == 2) {
 						dataEntity.setToCurrency(tmpData);
 					} else if (columnIdx == 3) {
-						if (null != tmpData && !tmpData.isEmpty()) {
-							dataEntity.setDealTimeStamp(ProgressSoftUtil.convertStringToDate(tmpData));
-						}
+						dataEntity.setDealTimeStamp(ProgressSoftUtil.convertStringToDate(tmpData));
 					} else if (columnIdx == 4) {
 						dataEntity.setDealAmount(tmpData);
 					}
@@ -133,7 +130,6 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 				if (validator.validate(dataEntity).isEmpty()) {
 					dealValidDataLst.add(dataEntity);
 				} else {
-//					LOGGER.info("{} ", dataEntity);
 					DealInValidDataEntity tmpInValid = new DealInValidDataEntity();
 					BeanUtils.copyProperties(dataEntity, tmpInValid);
 					dealInValidDataLst.add(tmpInValid);
@@ -174,7 +170,7 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 	@Override
 	@Transactional(readOnly = false)
 	public void bulkSaveAccumulativeDealsEntity() {
-		LOGGER.info("Invoked :  bulkSaveAccumulativeDealsEntity()"); 
+		LOGGER.info("Invoked :  bulkSaveAccumulativeDealsEntity()");
 		accumulativeDeals.addAll(accumulativeDealsRepository.findAll());
 		List<AccumulativeDealsEntity> tmp = new ArrayList<>();
 		accumulativeDealsRepository.deleteAll();
