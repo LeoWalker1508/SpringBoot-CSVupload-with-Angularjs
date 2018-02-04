@@ -14,8 +14,8 @@ Below you will find some information on how to do setup and run it.
 	- Sprint Boot 1.5.9.RELEASE
 	- Maven latest
 	- MySQL or H2 (With the dev profile you can use H2, but with the Prod Profile you need to use MySQL)
-1. Docker 
-	- 
+1. Docker
+	- Docker version 17.12.0-ce 
 	
 ### Getting Started
 
