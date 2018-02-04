@@ -6,11 +6,11 @@ Below you will find some information on how to do setup and run it.
 
 ### Prerequisites
 1.  AngularJS
-				 NPM
-				 Bower
+	- NPM
+	- Bower
 1. Spring Boot
-				Java 8
-				 Maven latest
+	- Java 8
+	- Maven latest
 ### Getting Started
 - Deplyment Process AngularJS
 			npm install
