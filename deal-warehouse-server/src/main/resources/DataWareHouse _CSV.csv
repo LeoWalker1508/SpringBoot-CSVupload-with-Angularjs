@@ -1,5 +1,5 @@
 dealUniqueId,fromCurrency,toCurrency,dealTimeStamp,dealAmount
-DEALID1,AED,SRD,11-Jan-10,1001
+DEALID1,AED,,11-Jan-10,1001
 DEALID2,AZN,TND,20-Jan-10,1010
 DEALID3,MXN,GBP,20-Apr-10,1100
 DEALID4,NAD,USD,27-Sep-12,1182

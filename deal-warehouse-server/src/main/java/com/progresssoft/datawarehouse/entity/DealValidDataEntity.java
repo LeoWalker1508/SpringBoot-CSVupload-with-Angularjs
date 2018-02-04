@@ -14,12 +14,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author s727953
  *
  */
 @Entity
-@Table(name = "DEAL_VALID_DATA")
+@Table(name = "DEAL_VALID_DATA") 
 public class DealValidDataEntity implements Serializable {
 
 	/**
@@ -30,11 +33,13 @@ public class DealValidDataEntity implements Serializable {
 	@GeneratedValue
 	private Integer dealId;
 
-	@NotNull(message = "Deal unique Id is compulsory")
+	@NotNull(message = "Deal unique Id is mandatory")
+	@NotBlank
 	// Deal Unique Id
 	private String dealUniqueId;
 
 	@NotNull
+	@NotBlank
 	@Size(min = 3, max = 3, message = "FROM Currency ISO Code should be 3 Character")
 	// From Currency ISO Code "Ordering Currency"
 	private String fromCurrency;
@@ -42,8 +47,7 @@ public class DealValidDataEntity implements Serializable {
 	// To Currency ISO Code
 	private String toCurrency;
 
-	@NotNull
-	// Deal timestamp
+	@NotNull 
 	private Date dealTimeStamp;
 
 	// Deal Amount in ordering currency

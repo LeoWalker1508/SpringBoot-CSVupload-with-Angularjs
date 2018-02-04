@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.progresssoft.datawarehouse.entity.AccumulativeDetailsEntity;
+import com.progresssoft.datawarehouse.entity.AccumulativeDealsEntity;
 import com.progresssoft.datawarehouse.repository.AccumulativeDealsRepositoryCustom;
 
 /**
@@ -29,14 +29,14 @@ public class AccumulativeDealsRepositoryImpl implements AccumulativeDealsReposit
 	EntityManager entityManager;
 
 	@Override
-	public void bulkSaveAccumulativeDealsEntity(List<AccumulativeDetailsEntity> tmpAccumulativeDealsEntity) {
+	public void bulkSaveAccumulativeDealsEntity(List<AccumulativeDealsEntity> tmpAccumulativeDealsEntity) {
 
 		LOGGER.info("Invoked:  bulkSaveAccumulativeDealsEntity() ");
 		long startSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
 		int batchSize = 100;
 		int i = 0;
-		for (AccumulativeDetailsEntity tmpEntity : tmpAccumulativeDealsEntity) {
+		for (AccumulativeDealsEntity tmpEntity : tmpAccumulativeDealsEntity) {
 			persistObject(tmpEntity);
 			i++;
 			if (i % batchSize == 0) {
@@ -49,7 +49,7 @@ public class AccumulativeDealsRepositoryImpl implements AccumulativeDealsReposit
 		LOGGER.info("Exit:  bulkSaveAccumulativeDealsEntity()");
 	}
 
-	public <T extends AccumulativeDetailsEntity> T persistObject(T t) {
+	public <T extends AccumulativeDealsEntity> T persistObject(T t) {
 		if (null != t.getId()) {
 			entityManager.persist(t);
 

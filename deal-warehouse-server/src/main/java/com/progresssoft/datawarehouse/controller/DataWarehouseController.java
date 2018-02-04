@@ -56,9 +56,7 @@ public class DataWarehouseController {
 		} else {
 			UploadedFileEntity objUploadedFile = dataWarehouseService.saveFileDetails(file.getOriginalFilename());
 			List<ResponseWSTO> lstWSTo = dataWarehouseService.saveDealData(file, objUploadedFile);
-			dataWarehouseService.bulkSaveInValidDealData();
 			dataWarehouseService.bulkSaveAccumulativeDealsEntity();
-
 			long endSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 			LOGGER.warn("Time taken {} s", (endSecond - startSecond));
 			LOGGER.debug("Exit :  uploadDealCustomerFile()");

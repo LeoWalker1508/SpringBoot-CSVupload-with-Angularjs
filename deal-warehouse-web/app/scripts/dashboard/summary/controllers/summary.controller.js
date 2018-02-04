@@ -16,7 +16,7 @@ Deal.controller('summaryCtrl',
 
     summaryCtrlVM.doFileSummary = function () {
       console.log(summaryCtrlVM.fileName)
-      var Url = "http://localhost:8080/datawarehouse/api/filesummary", //Url of webservice/api/server
+      var Url = "http://localhost:8181/datawarehouse/api/filesummary", //Url of webservice/api/server
         promise = wareHouseServices.fileSummary(summaryCtrlVM.fileName, Url);
 
       promise.then(function (response) {

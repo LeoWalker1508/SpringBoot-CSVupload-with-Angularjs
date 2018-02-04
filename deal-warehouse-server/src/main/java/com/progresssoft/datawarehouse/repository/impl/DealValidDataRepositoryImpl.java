@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,21 +31,18 @@ public class DealValidDataRepositoryImpl implements DealValidDataRepositoryCusto
 	private EntityManager entityManager;
 
 	@Override
-	public void bulkSaveValidDealData(List<DealValidDataEntity> dealInValidDataLst) {
+	public void bulkSaveValidDealData(List<DealValidDataEntity> entities) {
 
 		long startSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
 		LOGGER.info("Invoked:  bulkSaveInValidDealData() ");
-
-		int batchSize = 3500;
 		int i = 0;
-		for (DealValidDataEntity dealInValidData : dealInValidDataLst) {
-			persistObject(dealInValidData);
+		for (DealValidDataEntity entity : entities) {
+			entityManager.persist(entity);
 			i++;
-			if (i % batchSize == 0) {
-				entityManager.clear();
-				entityManager.flush();
-
+			if (i % 10000 == 0) {
+				flush();
+				clear();
 			}
 		}
 
@@ -53,15 +51,12 @@ public class DealValidDataRepositoryImpl implements DealValidDataRepositoryCusto
 		LOGGER.info("Exit:  bulkSaveInValidDealData()");
 	}
 
-	public <T extends DealValidDataEntity> T persistObject(T t) {
-		if (null != t.getDealUniqueId()) {
-			entityManager.persist(t);
+	private void flush() {
+		entityManager.flush();
+	}
 
-		} else {
-			entityManager.merge(t);
-		}
-
-		return t;
+	private void clear() {
+		entityManager.clear();
 	}
 
 }

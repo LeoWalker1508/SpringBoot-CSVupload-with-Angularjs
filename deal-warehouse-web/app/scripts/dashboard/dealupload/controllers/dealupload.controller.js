@@ -19,7 +19,7 @@ uploadDeal.controller('DealUploadCtrl',
 
     dealUploadCtrlVM.dealFileUpload = function () {
       var file = $scope.mycsvfile;
-      var uploadUrl = "http://localhost:8080/datawarehouse/api/uploaduserstories", //Url of webservice/api/server
+      var uploadUrl = "http://localhost:8181/datawarehouse/api/uploaduserstories", //Url of webservice/api/server
         promise = wareHouseServices.uploadWareHouseCSV(file, uploadUrl);
 
       promise.then(function (response) {

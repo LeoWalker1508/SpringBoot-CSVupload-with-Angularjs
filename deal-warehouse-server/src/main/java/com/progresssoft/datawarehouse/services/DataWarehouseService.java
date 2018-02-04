@@ -57,10 +57,6 @@ public interface DataWarehouseService {
 
 	void bulkSaveAccumulativeDealsEntity();
 
-	/**
-	 * 
-	 */
-
-	void bulkSaveInValidDealData();
+ 
 
 }

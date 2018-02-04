@@ -6,7 +6,7 @@ package com.progresssoft.datawarehouse.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.progresssoft.datawarehouse.entity.AccumulativeDetailsEntity;
+import com.progresssoft.datawarehouse.entity.AccumulativeDealsEntity;
 
 /**
  * @author s727953
@@ -14,6 +14,6 @@ import com.progresssoft.datawarehouse.entity.AccumulativeDetailsEntity;
  */
 @Repository
 public interface AccumulativeDealsRepository
-		extends JpaRepository<AccumulativeDetailsEntity, String>, AccumulativeDealsRepositoryCustom {
+		extends JpaRepository<AccumulativeDealsEntity, String>, AccumulativeDealsRepositoryCustom {
 
 }

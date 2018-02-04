@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ACCUMULATIVE_DETAILS")
-public class AccumulativeDetailsEntity implements Serializable {
+@Table(name = "ACCUMULATIVE_DEALS")
+public class AccumulativeDealsEntity implements Serializable {
 
 	/**
 	 * 
@@ -24,14 +24,14 @@ public class AccumulativeDetailsEntity implements Serializable {
 	private String currencyIsoCode;
 	private Long dealsCount;
 
-	public AccumulativeDetailsEntity() {
+	public AccumulativeDealsEntity() {
 	}
 
 	/**
 	 * @param currencyIsoCode
 	 * @param dealsCount
 	 */
-	public AccumulativeDetailsEntity(String currencyIsoCode, Long dealsCount) {
+	public AccumulativeDealsEntity(String currencyIsoCode, Long dealsCount) {
 		super();
 		this.currencyIsoCode = currencyIsoCode;
 		this.dealsCount = dealsCount;

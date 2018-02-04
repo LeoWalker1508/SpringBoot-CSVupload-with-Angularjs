@@ -9,12 +9,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
@@ -28,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.progresssoft.datawarehouse.entity.AccumulativeDetailsEntity;
+import com.progresssoft.datawarehouse.entity.AccumulativeDealsEntity;
 import com.progresssoft.datawarehouse.entity.DealInValidDataEntity;
 import com.progresssoft.datawarehouse.entity.DealValidDataEntity;
 import com.progresssoft.datawarehouse.entity.UploadedFileEntity;
@@ -52,13 +49,13 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataWarehouseServiceImpl.class);
 
 	@Autowired
+	private UploadedFileRepository uploadedFileRepository;
+
+	@Autowired
 	private DealValidDataRepository dealValidDataRepository;
 
 	@Autowired
 	private DealInValidDataRepository dealInValidDataRepository;
-
-	@Autowired
-	private UploadedFileRepository uploadedFileRepository;
 
 	@Autowired
 	private AccumulativeDealsRepository accumulativeDealsRepository;
@@ -66,13 +63,12 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 	@Autowired
 	private Validator validator;
 
-	List<AccumulativeDetailsEntity> accumulativeDeals = new ArrayList<>();
+	List<AccumulativeDealsEntity> accumulativeDeals = new ArrayList<>();
 
 	@Override
 	public String checkFileStatus(String fileName) {
 		LOGGER.info("Invoked :  checkFileStatus()");
-		UploadedFileEntity fileDetails = uploadedFileRepository.findByFileName(fileName);
-		if (null == fileDetails) {
+		if (null == uploadedFileRepository.findByFileName(fileName)) {
 			return ProgressSoftConstant.FILENOTFOUND;
 		}
 		LOGGER.info("Exit :  checkFileStatus() ");
@@ -82,10 +78,9 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 	@Override
 	@Transactional(readOnly = false)
 	public UploadedFileEntity saveFileDetails(String uploadFileName) {
-		LOGGER.info("Invoked :  saveFileUploadFileInfo()");
-		UploadedFileEntity uploadedFile = new UploadedFileEntity(uploadFileName);
-		uploadedFile = uploadedFileRepository.save(uploadedFile);
-		LOGGER.info("Exit :  saveFileUploadFileInfo()");
+		LOGGER.info("Invoked :  saveFileInfo()");
+		UploadedFileEntity uploadedFile = uploadedFileRepository.save(new UploadedFileEntity(uploadFileName));
+		LOGGER.info("Exit    :  saveFileInfo()");
 		return uploadedFile;
 	}
 
@@ -97,7 +92,7 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 		BeanUtils.copyProperties(fileEntity, target);
 		List<ResponseWSTO> list = new ArrayList<>();
 		list.add(target);
-		LOGGER.info("exit :  saveDealData() ");
+		LOGGER.info("Exit   :  saveDealData() ");
 		return list;
 
 	}
@@ -112,38 +107,33 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 		List<DealValidDataEntity> dealValidDataLst = new ArrayList<>();
 
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(file.getInputStream()));) {
-			Pattern pattern = Pattern.compile(",");
-
 			List<DealValidDataEntity> uploadedDealList = in.lines().skip(1).map(tmpLine -> {
-				String[] objLine = pattern.split(tmpLine);
 				DealValidDataEntity dataEntity = new DealValidDataEntity(fileEntity.getFileId());
+				;
 				int columnIdx = 0;
-				for (String tmpData : objLine) {
+				for (String tmpData : tmpLine.split(",")) {
+
 					if (columnIdx == 0) {
+
 						dataEntity.setDealUniqueId(tmpData);
-					}
-					if (columnIdx == 1) {
+					} else if (columnIdx == 1) {
 						dataEntity.setFromCurrency(tmpData);
-					}
-					if (columnIdx == 2) {
+					} else if (columnIdx == 2) {
 						dataEntity.setToCurrency(tmpData);
-					}
-					if (columnIdx == 3) {
+					} else if (columnIdx == 3) {
 						if (null != tmpData && !tmpData.isEmpty()) {
 							dataEntity.setDealTimeStamp(ProgressSoftUtil.convertStringToDate(tmpData));
 						}
-					}
-					if (columnIdx == 4) {
+					} else if (columnIdx == 4) {
 						dataEntity.setDealAmount(tmpData);
 					}
 					columnIdx++;
 				}
 
-				Set<ConstraintViolation<DealValidDataEntity>> violations = validator.validate(dataEntity);
-
-				if (violations.isEmpty()) {
+				if (validator.validate(dataEntity).isEmpty()) {
 					dealValidDataLst.add(dataEntity);
 				} else {
+//					LOGGER.info("{} ", dataEntity);
 					DealInValidDataEntity tmpInValid = new DealInValidDataEntity();
 					BeanUtils.copyProperties(dataEntity, tmpInValid);
 					dealInValidDataLst.add(tmpInValid);
@@ -153,40 +143,23 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 
 			}).collect(Collectors.toList());
 
-			long validSecond1 = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-			LOGGER.info("Invoked :  validSecond1>>>() >>>{} ", (validSecond1 - validSecond1),
-					dealInValidDataLst.size());
-
+			long endSecond1 = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 			dealValidDataRepository.bulkSaveValidDealData(dealValidDataLst);
 
-			long validSecond11 = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-
-			LOGGER.info("Invoked :  validSecond11() >>>{} ", (validSecond1 - validSecond11));
-
 			dealInValidDataRepository.bulkSaveInValidDealData(dealInValidDataLst);
+			long endSecond2 = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+
+			LOGGER.warn("bulkSaveInValidDealData Processing Time  {} s", (endSecond2 - endSecond1));
 
 			Map<String, Long> frequencyCount = uploadedDealList.stream()
 					.collect(Collectors.groupingBy(DealValidDataEntity::getFromCurrency, Collectors.counting()));
 
-			//
-			// uploadedDealList.stream().forEach(dealObj -> {
-			// try {
-			// dealValidDataRepository.save(dealObj);
-			// } catch (Exception e) {
-			// DealInValidDataEntity tmpInValid = new DealInValidDataEntity();
-			// BeanUtils.copyProperties(dealObj, tmpInValid);
-			// dealInValidDataLst.add(tmpInValid);
-			// }
-			// });
-			long validSecond2 = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-			LOGGER.info("Validaiton Time {}", validSecond2 - validSecond1);
-
 			long endSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
-			LOGGER.warn("Time taken {} s", (endSecond - startSecond));
+			LOGGER.warn("Processing Time  {} s", (endSecond - startSecond));
 			LOGGER.info("Exit :  parseUploadedCsvToDTO() ");
 
-			frequencyCount.forEach((key, val) -> accumulativeDeals.add(new AccumulativeDetailsEntity(key, val)));
+			frequencyCount.forEach((key, val) -> accumulativeDeals.add(new AccumulativeDealsEntity(key, val)));
 
 			fileEntity.setNoOfTotalDeal(uploadedDealList.size());
 			fileEntity.setNoOfInValidDeal(dealInValidDataLst.size());
@@ -200,27 +173,16 @@ public class DataWarehouseServiceImpl implements DataWarehouseService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void bulkSaveInValidDealData() {
-		LOGGER.info("Invoked :  bulkSaveAccumulativeDealsEntity()");
-		// dealInValidDataRepository.bulkSaveInValidDealData(dealInValidDataLst);
-		LOGGER.info("Exit :  bulkSaveAccumulativeDealsEntity()");
-
-	}
-
-	@Override
-	@Transactional(readOnly = false)
 	public void bulkSaveAccumulativeDealsEntity() {
-		LOGGER.info("Invoked :  bulkSaveAccumulativeDealsEntity()");
-		LOGGER.info(" {}", accumulativeDeals);
+		LOGGER.info("Invoked :  bulkSaveAccumulativeDealsEntity()"); 
 		accumulativeDeals.addAll(accumulativeDealsRepository.findAll());
-
-		List<AccumulativeDetailsEntity> tmp = new ArrayList<>();
+		List<AccumulativeDealsEntity> tmp = new ArrayList<>();
 		accumulativeDealsRepository.deleteAll();
 
 		accumulativeDeals.stream()
-				.collect(Collectors.groupingBy(AccumulativeDetailsEntity::getCurrencyIsoCode,
-						Collectors.summingLong(AccumulativeDetailsEntity::getDealsCount)))
-				.forEach((key, val) -> tmp.add(new AccumulativeDetailsEntity(key, val)));
+				.collect(Collectors.groupingBy(AccumulativeDealsEntity::getCurrencyIsoCode,
+						Collectors.summingLong(AccumulativeDealsEntity::getDealsCount)))
+				.forEach((key, val) -> tmp.add(new AccumulativeDealsEntity(key, val)));
 
 		LOGGER.info(" {}", tmp);
 		accumulativeDealsRepository.bulkSaveAccumulativeDealsEntity(tmp);
