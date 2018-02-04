@@ -35,3 +35,5 @@ Below you will find some information on how to do setup and run it.
 	- docker images (For checking the created docker )
 	- docker run -p 8080:8080 -t springio/clustered-data-warehouse (Run the Docker Image with port)
 	- docker ps ( For seeing the running container)
+	- docker stop 4f59bee2deb2(Container Id)
+	- docker rm <container Id> Stop  Container
