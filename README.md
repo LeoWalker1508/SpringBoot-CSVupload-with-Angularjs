@@ -14,11 +14,11 @@ Below you will find some information on how to do setup and run it.
 ### Getting Started
 
 #### Deplyment Process 
-	-AngularJS
-			npm install
-			bower install 
-			grunt serve
-	- Spring Boot
-			mvn clean
-			mvn  package 
-			java -jar target/{}0.jar
+1. AngularJS
+	- npm install
+	- bower install
+	- grunt serve
+1. Spring Boot
+	- mvn clean
+	- mvn  package
+	- java -jar target/{}0.jar
