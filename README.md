@@ -12,11 +12,13 @@ Below you will find some information on how to do setup and run it.
 	- Java 8
 	- Maven latest
 ### Getting Started
-- Deplyment Process AngularJS
+
+#### Deplyment Process 
+	-AngularJS
 			npm install
 			bower install 
 			grunt serve
-- Deplyment Process AngularJS
+	- Spring Boot
 			mvn clean
 			mvn  package 
-			 java -jar target/{}0.jar
+			java -jar target/{}0.jar
