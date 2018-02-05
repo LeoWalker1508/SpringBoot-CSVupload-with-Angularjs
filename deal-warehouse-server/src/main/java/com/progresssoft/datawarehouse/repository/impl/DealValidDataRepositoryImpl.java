@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +35,12 @@ public class DealValidDataRepositoryImpl implements DealValidDataRepositoryCusto
 		long startSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
 		LOGGER.info("Invoked:  bulkSaveInValidDealData() ");
+		int batchSize = 10000;
 		int i = 0;
 		for (DealValidDataEntity entity : entities) {
 			entityManager.persist(entity);
 			i++;
-			if (i % 10000 == 0) {
+			if (i % batchSize == 0) {
 				flush();
 				clear();
 			}
