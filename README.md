@@ -35,5 +35,5 @@ This is a Spring boot & AngularJS Application. With the help of this application
 - docker run -p 8181:8181 -t springio/clustered-data-warehouse (Run the Docker Image with port)
 - docker ps ( For seeing the running container)
 - docker stop 4f59bee2deb2(Container Id)
-- docker rm <container Id> 
+- docker rm '< container Id> '
 - docker Stop  Container
