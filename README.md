@@ -30,9 +30,10 @@ This is a Spring boot & AngularJS Application. With the help of this application
 
 ### Docker Configuration (Docker commands and configuration will work only With H2 Database)
 - mvn clean install (Build the application)
-- mvn install dockerfile:build (Build the Docker Image)	
-- docker images (For checking the created Docker )
+- mvn install dockerfile:build (Build the Docker Images)	
+- docker images (For checking the Docker created Images )
 - docker run -p 8181:8181 -t springio/clustered-data-warehouse (Run the Docker Image with port)
 - docker ps ( For seeing the running container)
 - docker stop 4f59bee2deb2(Container Id)
-- docker rm <container Id> Stop  Container
+- docker rm <container Id> 
+- docker Stop  Container
