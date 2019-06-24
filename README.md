@@ -1,7 +1,7 @@
 ## Spring Boot AngularJS Application
 ##### Read and Upload CSV file 
 
-This is a Spring boot & AngularJS Application. With the help of this application, we can upload and read CSV.
+This is a Spring boot & AngularJS Application.  With the help of this application, we can upload and read CSV.
 
 ### Prerequisites
 1.  AngularJS
