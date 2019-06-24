@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/everythingisdata/SpringBoot-CSVupload-with-Angularjs.svg?branch=master)](https://travis-ci.org/everythingisdata/SpringBoot-CSVupload-with-Angularjs)
+
 ## Spring Boot AngularJS Application
 ##### Read and Upload CSV file 
 
