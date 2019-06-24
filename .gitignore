@@ -1,3 +1,5 @@
 test.txt
 *.project
 *.prefs
+*.classpath
+deal-warehouse-web/target/
